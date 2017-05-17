@@ -45,15 +45,21 @@ public class MainActivity extends AppCompatActivity {
         idxList = new ArrayList<Integer>();
         idxList.add(0); idxList.add(1); idxList.add(2);
 
-        if (extras != null){
+        currentPuzzle = 0;
+
+
+        if (extras != null && extras.containsKey("curr") && extras.containsKey("list")){
             currentPuzzle = extras.getInt("curr");
             idxList = (ArrayList<Integer>) extras.get("list");
-            idxList.remove(Integer.valueOf(currentPuzzle));
+            if (idxList != null) {
 
-            scoreView.setText("Progress: "+(3-idxList.size())+"/3");
-            if (idxList.isEmpty()){
-                resetBtn.setActivated(true);
-                resetBtn.setVisibility(View.VISIBLE);
+                idxList.remove(Integer.valueOf(currentPuzzle));
+
+                scoreView.setText("Progress: " + (3 - idxList.size()) + "/3");
+                if (idxList.isEmpty()) {
+                    resetBtn.setActivated(true);
+                    resetBtn.setVisibility(View.VISIBLE);
+                }
             }
         }
 
@@ -94,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        currentPuzzle = 0;
+
         img = (ImageView) findViewById(R.id.imageView2);
         updatePuzzle();
     }
